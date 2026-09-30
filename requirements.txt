@@ -1,0 +1,9 @@
+# Base dependencies (no national-cryptography backend required at install time).
+pyjwt>=2.8
+cryptography>=42.0
+
+# 国密后端（任选其一，均为可选；用 extras 安装）：
+#   pip install "snowland-jwt[smx]"    -> snowland-smx>=1.1   (pysmx 后端)
+#   pip install "snowland-jwt[gmssl]"  -> gmssl-pyx>=2.1.0    (gmssl-pyx 后端)
+# snowland-smx>=1.1
+# gmssl-pyx>=2.1.0
