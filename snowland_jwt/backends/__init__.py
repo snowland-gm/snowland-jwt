@@ -52,6 +52,10 @@ def get_crypto_backend(name=None):
     """
     if name is None:
         for candidate in _DEFAULT_PROBE_ORDER:
+            # Skip backends that were never registered (i.e. their optional
+            # package failed to import at load time) instead of raising KeyError.
+            if candidate not in _BACKEND_REGISTRY:
+                continue
             try:
                 return _BACKEND_REGISTRY[candidate]()
             except ImportError:

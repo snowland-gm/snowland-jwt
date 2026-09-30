@@ -17,8 +17,10 @@ def _backend_installed(name):
 
 _HAS_PYSMS = _backend_installed("pysmx")
 _HAS_GMSSL = _backend_installed("gmssl_pyx")
+_HAS_ANY_BACKEND = _HAS_PYSMS or _HAS_GMSSL
 
 
+@unittest.skipUnless(_HAS_ANY_BACKEND, "no national-cryptography backend installed")
 class TestSM2JWT(unittest.TestCase):
     def setUp(self):
         self.private_key, self.public_key = jwt.generate_key()
@@ -129,6 +131,7 @@ class TestBackends(unittest.TestCase):
             jwt.decode(t_p, self.public_key, algorithms=[a_g])
 
 
+@unittest.skipUnless(_HAS_ANY_BACKEND, "no national-cryptography backend installed")
 class TestHMACSM3JWT(unittest.TestCase):
     def setUp(self):
         self.secret = "guomi-shared-secret-key-0123456789abcdef"

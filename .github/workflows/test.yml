@@ -31,6 +31,11 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -e .
           python -m pip install -r requirements.txt
+          # Install at least one national-cryptography backend so the SM2/SM3
+          # tests actually run. Both are optional; tolerate a single failure so
+          # one backend covering all platforms is enough.
+          python -m pip install "snowland-smx" || echo "snowland-smx install failed"
+          python -m pip install "gmssl-pyx" || echo "gmssl-pyx install failed"
 
       - name: Compile check
         run: python -m compileall -q snowland_jwt
